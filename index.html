@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>До нашей долгожданной встречи ❤️ | 23.09.2026 06:42</title>
+  <meta name="description" content="Считаем каждую секунду до момента, когда мы снова будем вместе. 23 сентября 2026 в 06:42.">
+  
+  <!-- Open Graph / Meta for sharing -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="До нашей долгожданной встречи ❤️">
+  <meta property="og:description" content="Считаю каждую секунду до твоего приезда...">
+  <meta property="og:image" content="assets/photo.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>❤️</text></svg>">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Marck+Script&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Canvas for floating romantic particles & hearts -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Ambient Glow Blobs -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+  <div class="ambient-glow glow-3"></div>
+
+  <!-- Music toggle button -->
+  <div class="audio-control-container">
+    <button id="music-btn" class="glass-pill-btn" title="Включить романтическую мелодию" aria-label="Музыка">
+      <div class="music-icon-wrapper">
+        <span class="music-note">🎵</span>
+        <div class="equalizer" id="equalizer">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </div>
+      <span class="music-label" id="music-label">Музыка для нас</span>
+    </button>
+  </div>
+
+  <main class="page-wrapper">
+    
+    <!-- Hero Section -->
+    <header class="hero-section">
+      <div class="badge-pill fade-in">
+        <span class="pulse-dot"></span>
+        <span>До самого счастливого утра</span>
+      </div>
+
+      <h1 class="hero-title fade-in delay-1">
+        Я так сильно <span class="gradient-text">скучаю по тебе</span>
+      </h1>
+      
+      <p class="hero-subtitle fade-in delay-2">
+        Считаю каждую секунду, когда смогу крепко обнять тебя и больше никуда не отпускать
+      </p>
+
+      <!-- Romantic Photo Frame -->
+      <div class="photo-container fade-in delay-3">
+        <div class="polaroid-card">
+          <div class="photo-frame">
+            <img src="assets/photo.jpg" alt="Мы вместе" class="couple-photo" id="main-photo" loading="eager">
+            <div class="photo-shine"></div>
+            <div class="photo-heart-badge">❤️</div>
+          </div>
+          <div class="polaroid-caption">
+            <p class="caption-text">«Самое уютное место в мире — рядом с тобой»</p>
+            <span class="caption-date">23 сентября 2026 • 06:42</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Countdown Section -->
+    <section class="countdown-section fade-in delay-4">
+      <div class="target-date-banner">
+        <span class="calendar-icon">🗓️</span>
+        <span>День нашей встречи: <strong>23 сентября 2026 г., 06:42</strong></span>
+      </div>
+
+      <!-- Live Countdown Grid -->
+      <div class="countdown-grid" id="countdown-grid">
+        <div class="timer-card">
+          <div class="timer-number-wrapper">
+            <span class="timer-number" id="days">00</span>
+          </div>
+          <span class="timer-label">Дней</span>
+        </div>
+
+        <div class="timer-card">
+          <div class="timer-number-wrapper">
+            <span class="timer-number" id="hours">00</span>
+          </div>
+          <span class="timer-label">Часов</span>
+        </div>
+
+        <div class="timer-card">
+          <div class="timer-number-wrapper">
+            <span class="timer-number" id="minutes">00</span>
+          </div>
+          <span class="timer-label">Минут</span>
+        </div>
+
+        <div class="timer-card highlight">
+          <div class="timer-number-wrapper">
+            <span class="timer-number" id="seconds">00</span>
+          </div>
+          <span class="timer-label">Секунд</span>
+        </div>
+      </div>
+
+      <!-- Quick interactive metrics -->
+      <div class="time-metrics-grid">
+        <div class="metric-chip">
+          <span class="metric-icon">⏳</span>
+          <span class="metric-val" id="total-hours-left">...</span>
+          <span class="metric-text">всего часов ожидания</span>
+        </div>
+        <div class="metric-chip">
+          <span class="metric-icon">💓</span>
+          <span class="metric-val" id="total-heartbeats">...</span>
+          <span class="metric-text">ударов сердца до встречи</span>
+        </div>
+      </div>
+
+      <!-- Interactive Send Kiss & Hug Button -->
+      <div class="action-buttons-group">
+        <button id="send-kiss-btn" class="primary-love-btn">
+          <span class="btn-icon">💋</span>
+          <span class="btn-text">Отправить поцелуй любимой</span>
+          <span class="kiss-badge" id="kiss-count-badge">0</span>
+        </button>
+
+        <button id="open-letter-btn" class="secondary-love-btn">
+          <span class="btn-icon">💌</span>
+          <span class="btn-text">Открыть моё письмо для тебя</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Reasons & Love Notes Section -->
+    <section class="love-notes-section">
+      <div class="section-header">
+        <span class="section-subtitle">Маленькие напоминания</span>
+        <h2 class="section-title">Почему я считаю каждую минуту</h2>
+      </div>
+
+      <div class="notes-grid">
+        <div class="note-card">
+          <div class="note-icon">✨</div>
+          <h3>Твоя улыбка</h3>
+          <p>Она освещает даже самый пасмурный день. Никакие расстояния не заставят меня забыть твой нежный взгляд.</p>
+        </div>
+
+        <div class="note-card">
+          <div class="note-icon">☕</div>
+          <h3>Наше идеальное утро</h3>
+          <p>23 сентября в 06:42 начнется день, когда мы проснемся вдвоем, сварим кофе и никуда не будем спешить.</p>
+        </div>
+
+        <div class="note-card">
+          <div class="note-icon">🫂</div>
+          <h3>Самые теплые объятия</h3>
+          <p>Момент, когда я прижму тебя к себе на перроне — сотрет все дни и километры разлуки в одну секунду.</p>
+        </div>
+
+        <div class="note-card">
+          <div class="note-icon">🌙</div>
+          <h3>Засыпать вместе</h3>
+          <p>Слушать твое дыхание рядом, держать твою руку в своей и знать, что ты дома — это всё, чего я желаю.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- First Day Wishlist / Checklist -->
+    <section class="checklist-section">
+      <div class="section-header">
+        <span class="section-subtitle">Планы на 23.09.2026</span>
+        <h2 class="section-title">Что мы сделаем в наш первый день</h2>
+      </div>
+
+      <div class="checklist-card">
+        <ul class="romantic-checklist" id="romantic-checklist">
+          <li class="check-item active">
+            <span class="checkbox-custom">✓</span>
+            <div class="check-content">
+              <strong>Встретить тебя в 06:42</strong>
+              <p>Быть первым, кого ты увидишь при выходе, подарить любимые цветы.</p>
+            </div>
+          </li>
+          <li class="check-item active">
+            <span class="checkbox-custom">✓</span>
+            <div class="check-content">
+              <strong>Крепко обнять и не отпускать минимум 5 минут</strong>
+              <p>Почувствовать твое тепло и сказать, как сильно я скучал.</p>
+            </div>
+          </li>
+          <li class="check-item active">
+            <span class="checkbox-custom">✓</span>
+            <div class="check-content">
+              <strong>Самый вкусный совместный завтрак</strong>
+              <p>Приготовить то, что ты больше всего любишь, и заварить ароматный чай.</p>
+            </div>
+          </li>
+          <li class="check-item active">
+            <span class="checkbox-custom">✓</span>
+            <div class="check-content">
+              <strong>Гулять держась за руки</strong>
+              <p>Разговаривать обо всем на свете и просто наслаждаться тем, что мы рядом.</p>
+            </div>
+          </li>
+          <li class="check-item active">
+            <span class="checkbox-custom">✓</span>
+            <div class="check-content">
+              <strong>Укутаться в плед и уснуть в обнимку</strong>
+              <p>Самый сладкий и спокойный сон в объятиях любимого человека.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Quotes & Romantic Banner -->
+    <section class="quote-section">
+      <div class="quote-card">
+        <span class="quote-mark">“</span>
+        <p class="quote-text">Расстояние проверяет не силу чувств, а учит ценить каждую секунду, проведенную вместе.</p>
+        <span class="quote-author">— Жду тебя каждую секунду ❤️</span>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <p class="footer-love">Сделано с бесконечной любовью для тебя</p>
+      <p class="footer-time">До встречи осталось совсем немного • 23.09.2026 06:42</p>
+    </footer>
+
+  </main>
+
+  <!-- Interactive Love Letter Modal -->
+  <div class="modal-backdrop" id="letter-modal" aria-hidden="true">
+    <div class="modal-dialog">
+      <button class="modal-close-btn" id="close-letter-btn" aria-label="Закрыть письмо">&times;</button>
+      
+      <div class="envelope-wrapper">
+        <div class="letter-card">
+          <div class="letter-stamp">💌</div>
+          <h2 class="letter-heading">Моя любимая и родная...</h2>
+          
+          <div class="letter-body">
+            <p>Каждый день вдали от тебя тянется целую вечность. Я ловлю себя на мысли о тебе в каждой мелочи: когда пью утренний кофе, когда смотрю на закат или когда перед сном листаю наши совместные фото.</p>
+            
+            <p>Я считаю не просто дни, я считаю часы, минуты и каждый удар сердца. <strong>23 сентября в 06:42</strong> станет самым счастливым моментом, потому что этот поезд/самолет привезет мне самое дорогое, что есть в моей жизни — тебя.</p>
+            
+            <p>Спасибо за твою нежность, поддержку и любовь, которая согревает даже через сотни километров. Скоро мы будем рядом, и я крепко сожму твою ладонь.</p>
+            
+            <p class="letter-signature">
+              Безумно люблю и жду тебя,<br>
+              <span class="signature-handwritten">Твой навсегда ❤️</span>
+            </p>
+          </div>
+
+          <div class="letter-footer-action">
+            <button class="letter-hug-btn" id="letter-send-hug">
+              <span>🫂 Отправить крепкое объятие в ответ</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container for interactive feedback -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
