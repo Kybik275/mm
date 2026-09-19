@@ -1,11 +1,11 @@
 /**
- * Romantic Countdown to 23.09.2026 06:42
+ * Romantic Countdown to 24.09.2026 06:42
  * Features: Live countdown, Interactive Kiss/Hug bursts, Ambient Music,
  * Canvas Starfield & Hearts, Letter Modal, Checklist.
  */
 
-// Target Reunion Date: September 23, 2026, 06:42:00
-const TARGET_DATE = new Date(2026, 8, 23, 6, 42, 0); // Month is 0-indexed (8 = September)
+// Target Reunion Date: 24 сентября 2026, 06:42:00 МСК (UTC+3)
+const TARGET_DATE = new Date('2026-09-24T06:42:00+03:00');
 
 // DOM Elements
 const daysEl = document.getElementById('days');
@@ -27,6 +27,8 @@ const toastContainer = document.getElementById('toast-container');
 const canvas = document.getElementById('bg-canvas');
 const ctx = canvas.getContext('2d');
 
+let countdownInterval = null;
+
 // --- 1. COUNTDOWN TIMER ---
 function updateCountdown() {
   const now = new Date();
@@ -39,6 +41,10 @@ function updateCountdown() {
     secondsEl.textContent = '00';
     totalHoursEl.textContent = '0';
     totalHeartbeatsEl.textContent = '0';
+    if (countdownInterval) {
+      clearInterval(countdownInterval);
+      countdownInterval = null;
+    }
     showToast('Мы наконец-то вместе! Навсегда! ❤️✨');
     return;
   }
@@ -61,8 +67,8 @@ function updateCountdown() {
   totalHeartbeatsEl.textContent = heartbeats.toLocaleString('ru-RU');
 }
 
-setInterval(updateCountdown, 1000);
 updateCountdown();
+countdownInterval = setInterval(updateCountdown, 1000);
 
 // --- 2. KISSES COUNTER & INTERACTION ---
 let kissCount = parseInt(localStorage.getItem('love_kiss_counter') || '0', 10);
