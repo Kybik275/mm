@@ -82,9 +82,50 @@
 
     <!-- Main Countdown Section -->
     <section class="countdown-section fade-in delay-4">
-      <div class="target-date-banner">
-        <span class="calendar-icon">🗓️</span>
-        <span>День нашей встречи: <strong>24 сентября 2026 г., 06:42</strong></span>
+      <!-- Trip Timeline Card (Arrival & Departure) -->
+      <div class="trip-timeline-card">
+        <div class="trip-point arrival active">
+          <div class="trip-point-icon">🌸</div>
+          <div class="trip-point-info">
+            <span class="trip-label">Приезд любимой</span>
+            <strong class="trip-date">24 сентября 2026</strong>
+            <span class="trip-time">06:42 МСК</span>
+          </div>
+        </div>
+
+        <div class="trip-divider">
+          <div class="trip-duration-badge">
+            <span class="heart-pulse">❤️</span>
+            <span>6 дней 15 часов вместе</span>
+          </div>
+          <div class="trip-line"></div>
+        </div>
+
+        <div class="trip-point departure">
+          <div class="trip-point-icon">🚆</div>
+          <div class="trip-point-info">
+            <span class="trip-label">Отъезд</span>
+            <strong class="trip-date">30 сентября 2026</strong>
+            <span class="trip-time">21:42 МСК</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Timer Mode Switcher (Fixed on arrival by default) -->
+      <div class="timer-mode-container">
+        <div class="timer-mode-tabs" role="tablist">
+          <button class="timer-tab-btn active" id="tab-arrival-btn" type="button" role="tab" aria-selected="true">
+            <span class="tab-icon">🌸</span>
+            <span>Приезд (24.09 • 06:42)</span>
+          </button>
+          <button class="timer-tab-btn" id="tab-departure-btn" type="button" role="tab" aria-selected="false">
+            <span class="tab-icon">🚆</span>
+            <span>Отъезд (30.09 • 21:42)</span>
+          </button>
+        </div>
+        <p class="timer-status-hint" id="timer-status-hint">
+          📍 Таймер зафиксирован на дате приезда (24.09.2026 в 06:42)
+        </p>
       </div>
 
       <!-- Live Countdown Grid -->
@@ -225,7 +266,40 @@
               <p>Самый сладкий и спокойный сон в объятиях любимого человека.</p>
             </div>
           </li>
+          <li class="check-item active">
+            <span class="checkbox-custom">✓</span>
+            <div class="check-content">
+              <strong>Проводить тебя 30 сентября в 21:42</strong>
+              <p>Подарить самый крепкий и долгий поцелуй на перроне и пообещать скорую встречу.</p>
+            </div>
+          </li>
         </ul>
+      </div>
+    </section>
+
+    <!-- Romantic Photo Gallery Section -->
+    <section class="gallery-section fade-in" id="gallery-section">
+      <div class="section-header">
+        <span class="section-subtitle">Наши воспоминания</span>
+        <h2 class="section-title">Галерея наших моментов ❤️</h2>
+        <p class="section-desc">
+          Нажмите на любое фото, чтобы открыть его на весь экран. Вы также можете загружать новые совместные фотографии прямо с телефона или компьютера!
+        </p>
+      </div>
+
+      <!-- Gallery Toolbar -->
+      <div class="gallery-toolbar">
+        <label for="gallery-file-input" class="gallery-upload-btn" id="gallery-upload-label" title="Загрузить фото с устройства">
+          <span class="upload-icon">📸</span>
+          <span class="upload-text">Добавить фото в галерею</span>
+          <input type="file" id="gallery-file-input" accept="image/*" multiple style="display: none;">
+        </label>
+        <span class="gallery-storage-hint">💡 Загруженные фото сохраняются на устройстве. Чтобы фото были видны всем — их можно добавить в папку <code>assets/gallery/</code></span>
+      </div>
+
+      <!-- Gallery Grid -->
+      <div class="gallery-grid" id="gallery-grid">
+        <!-- Rendered by JavaScript -->
       </div>
     </section>
 
@@ -241,7 +315,7 @@
     <!-- Footer -->
     <footer class="site-footer">
       <p class="footer-love">Сделано с бесконечной любовью для тебя</p>
-      <p class="footer-time">До встречи осталось совсем немного • 24.09.2026 06:42</p>
+      <p class="footer-time">Время нашей встречи • 24.09.2026 06:42 — 30.09.2026 21:42</p>
     </footer>
 
   </main>
@@ -276,6 +350,28 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Lightbox Modal for Photo Zoom & Fullscreen Viewing -->
+  <div class="lightbox-modal" id="lightbox-modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="lightbox-backdrop" id="lightbox-backdrop"></div>
+    <div class="lightbox-container">
+      <button class="lightbox-close-btn" id="lightbox-close-btn" aria-label="Закрыть просмотр">&times;</button>
+      
+      <button class="lightbox-arrow-btn prev" id="lightbox-prev-btn" aria-label="Предыдущее фото">‹</button>
+      
+      <div class="lightbox-content">
+        <div class="lightbox-img-wrapper">
+          <img src="" alt="Фотография" class="lightbox-img" id="lightbox-img">
+        </div>
+        <div class="lightbox-meta">
+          <p class="lightbox-caption" id="lightbox-caption"></p>
+          <span class="lightbox-counter" id="lightbox-counter">1 / 1</span>
+        </div>
+      </div>
+
+      <button class="lightbox-arrow-btn next" id="lightbox-next-btn" aria-label="Следующее фото">›</button>
     </div>
   </div>
 
