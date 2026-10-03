@@ -399,36 +399,38 @@ const DEFAULT_GALLERY_PHOTOS = [
   {
     id: 'photo-1',
     src: 'assets/gallery/1.jpg',
-    caption: 'Наши счастливые моменты ❤️',
-    date: '24 сентября 2026',
+    caption: 'Приезд любимой ❤️',
+    date: '24 сентября 2026 • 06:42',
+    badge: '🌸 Приезд',
     isDefault: true
   },
   {
     id: 'photo-2',
     src: 'assets/gallery/2.jpg',
-    caption: 'Самые тёплые воспоминания ✨',
-    date: '25 сентября 2026',
+    caption: 'Самые тёплые дни вместе ✨',
+    date: 'Сентябрь 2026',
     isDefault: true
   },
   {
     id: 'photo-3',
     src: 'assets/gallery/3.jpg',
     caption: 'Рядом с тобой всегда улыбка 🌸',
-    date: '26 сентября 2026',
+    date: 'Сентябрь 2026',
     isDefault: true
   },
   {
     id: 'photo-4',
     src: 'assets/gallery/4.jpg',
-    caption: 'Бесконечно люблю тебя 💫',
-    date: '27 сентября 2026',
+    caption: 'Отъезд • До скорой встречи 🚆❤️',
+    date: '30 сентября 2026 • 21:42',
+    badge: '🚆 Отъезд',
     isDefault: true
   },
   {
     id: 'default-main-photo',
     src: 'assets/photo.jpg',
     caption: 'Самое уютное место в мире — рядом с тобой ❤️',
-    date: '24 сентября 2026 • 06:42',
+    date: '24–30 сентября 2026',
     isDefault: true
   }
 ];
@@ -571,6 +573,7 @@ function renderGalleryGrid() {
     card.innerHTML = `
       <div class="gallery-img-wrap">
         <img src="${photo.src}" alt="${photo.caption || 'Фото'}" class="gallery-img" loading="lazy">
+        ${photo.badge ? `<span class="gallery-event-badge">${photo.badge}</span>` : ''}
         <div class="gallery-hover-overlay">
           <div class="gallery-zoom-badge">🔍</div>
         </div>
@@ -633,7 +636,9 @@ function updateLightboxContent() {
   lightboxImg.style.opacity = '0';
   setTimeout(() => {
     lightboxImg.src = photo.src;
-    if (lightboxCaption) lightboxCaption.textContent = photo.caption || 'Наш момент ❤️';
+    if (lightboxCaption) {
+      lightboxCaption.textContent = photo.caption + (photo.date ? ` • ${photo.date}` : '');
+    }
     if (lightboxCounter) lightboxCounter.textContent = `${currentLightboxIndex + 1} / ${allGalleryPhotos.length}`;
     lightboxImg.style.opacity = '1';
   }, 120);
