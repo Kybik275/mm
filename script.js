@@ -394,8 +394,36 @@ const DB_VERSION = 1;
 const STORE_NAME = 'photos';
 
 // 1. Встроенные фотографии проекта (видны ВСЕМ пользователям и на ВСЕХ устройствах)
-// Чтобы добавить новые фото для всех — положите файлы в assets/gallery/ и добавьте их в этот список:
+// Чтобы добавить новые фото для всех — положите файлы в assets/gallery/ (1.jpg, 2.jpg...)
 const DEFAULT_GALLERY_PHOTOS = [
+  {
+    id: 'photo-1',
+    src: 'assets/gallery/1.jpg',
+    caption: 'Наши счастливые моменты ❤️',
+    date: '24 сентября 2026',
+    isDefault: true
+  },
+  {
+    id: 'photo-2',
+    src: 'assets/gallery/2.jpg',
+    caption: 'Самые тёплые воспоминания ✨',
+    date: '25 сентября 2026',
+    isDefault: true
+  },
+  {
+    id: 'photo-3',
+    src: 'assets/gallery/3.jpg',
+    caption: 'Рядом с тобой всегда улыбка 🌸',
+    date: '26 сентября 2026',
+    isDefault: true
+  },
+  {
+    id: 'photo-4',
+    src: 'assets/gallery/4.jpg',
+    caption: 'Бесконечно люблю тебя 💫',
+    date: '27 сентября 2026',
+    isDefault: true
+  },
   {
     id: 'default-main-photo',
     src: 'assets/photo.jpg',
@@ -473,6 +501,47 @@ async function deleteStoredPhoto(id) {
   }
 }
 
+// Автопоиск дополнительных фотографий в папке assets/gallery/ (5.jpg ... 25.jpg)
+function checkImageExists(url) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => resolve(true);
+    img.onerror = () => resolve(false);
+    img.src = url;
+  });
+}
+
+async function probeAdditionalGalleryPhotos() {
+  const discovered = [];
+  const registeredSrcs = new Set(DEFAULT_GALLERY_PHOTOS.map(p => p.src));
+
+  const probePromises = [];
+  for (let i = 1; i <= 25; i++) {
+    const srcJpg = `assets/gallery/${i}.jpg`;
+    if (!registeredSrcs.has(srcJpg)) {
+      probePromises.push(checkImageExists(srcJpg).then(exists => {
+        if (exists) {
+          discovered.push({
+            id: `auto-photo-${i}`,
+            src: srcJpg,
+            caption: `Наш счастливый момент #${i} ❤️`,
+            date: '2026',
+            isDefault: true
+          });
+        }
+      }));
+    }
+  }
+
+  await Promise.all(probePromises);
+  discovered.sort((a, b) => {
+    const numA = parseInt(a.id.replace(/\D/g, ''), 10) || 0;
+    const numB = parseInt(b.id.replace(/\D/g, ''), 10) || 0;
+    return numA - numB;
+  });
+  return discovered;
+}
+
 let allGalleryPhotos = [];
 let currentLightboxIndex = 0;
 
@@ -480,6 +549,14 @@ async function loadAndRenderGallery() {
   const userPhotos = await getStoredPhotos();
   allGalleryPhotos = [...DEFAULT_GALLERY_PHOTOS, ...userPhotos];
   renderGalleryGrid();
+
+  // Дозагружаем новые фото из assets/gallery/ (если добавлены 5.jpg, 6.jpg и т.д.)
+  probeAdditionalGalleryPhotos().then(extraPhotos => {
+    if (extraPhotos.length > 0) {
+      allGalleryPhotos = [...DEFAULT_GALLERY_PHOTOS, ...extraPhotos, ...userPhotos];
+      renderGalleryGrid();
+    }
+  });
 }
 
 function renderGalleryGrid() {
